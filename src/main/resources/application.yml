@@ -1,0 +1,19 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+logging:
+  level:
+    root: INFO
+
+spring:
+  application:
+    name: quiz-app
+  jpa:
+    open-in-view: false
+    hibernate:
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyComponentPathImpl
+  profiles:
+    active: dev

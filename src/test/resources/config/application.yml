@@ -1,0 +1,6 @@
+spring:
+  profiles:
+    active: test
+  datasource:
+    url: jdbc:tc:postgresql:13-alpine:///quiz-app-test-db
+    datasource-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
