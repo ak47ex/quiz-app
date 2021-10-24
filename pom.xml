@@ -18,9 +18,7 @@
 
     <properties>
         <java.version>11</java.version>
-        <swagger-annotations.version>2.1.6</swagger-annotations.version>
         <testcontainers.version>1.15.3</testcontainers.version>
-        <git-commit-id-plugin.version>4.0.3</git-commit-id-plugin.version>
     </properties>
 
     <dependencies>
@@ -41,12 +39,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-        </dependency>
-        <!-- Swagger -->
-        <dependency>
-            <groupId>io.swagger.core.v3</groupId>
-            <artifactId>swagger-annotations</artifactId>
-            <version>${swagger-annotations.version}</version>
         </dependency>
         <!-- Database-->
         <dependency>
