@@ -6,9 +6,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import ru.pyatkinmv.QuizApplication;
 import ru.pyatkinmv.model.AnswerDto;
 
-import java.util.List;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(classes = QuizApplication.class)
 class QuestionServiceTest {
@@ -16,13 +16,23 @@ class QuestionServiceTest {
     private AnswerService answerService;
 
     @Test
-    void createAndGetTest() {
-//        AnswerDto answerDto = AnswerDto.builder().text("Some text").build();
-//
-//        answerService.create(answerDto);
-//        List<AnswerDto> allProducts = answerService.getAll();
-//
-//        assertEquals(1, allProducts.size());
-//        assertEquals(answerDto.getText(), allProducts.get(0).getText());
+    void createGetAndDeleteTest() {
+        AnswerDto answerDto = AnswerDto.builder()
+                .text("text")
+                .build();
+        AnswerDto savedAnswer = answerService.create(answerDto);
+
+        Optional<AnswerDto> getAnswerResult = answerService.getById(savedAnswer.getId());
+        assertTrue(getAnswerResult.isPresent());
+        assertEquals(savedAnswer, getAnswerResult.get());
+
+        boolean deleted = answerService.deleteById(savedAnswer.getId());
+        assertTrue(deleted);
+
+        Optional<AnswerDto> getAnswerAfterDeletion = answerService.getById(savedAnswer.getId());
+        assertTrue(getAnswerAfterDeletion.isEmpty());
+
+        deleted = answerService.deleteById(savedAnswer.getId());
+        assertFalse(deleted);
     }
 }
