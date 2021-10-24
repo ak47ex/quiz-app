@@ -11,7 +11,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(classes = QuizApplication.class)
-class QuestionServiceTest {
+class AnswerServiceTest {
     @Autowired
     private AnswerService answerService;
 
