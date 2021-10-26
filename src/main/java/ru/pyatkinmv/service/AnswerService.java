@@ -43,6 +43,7 @@ public class AnswerService {
                 .orElse(emptyList());
     }
 
+    @Transactional
     public Optional<AnswerDto> getById(Integer id) {
         return answerRepository.findById(id)
                 .map(AnswerService::toDto);
@@ -57,6 +58,7 @@ public class AnswerService {
         );
     }
 
+    @Transactional
     public boolean deleteById(Integer id) {
         try {
             answerRepository.deleteById(id);
