@@ -25,7 +25,7 @@ public class AnswerService {
         return new AnswerDto(answer.getId(), answer.getText());
     }
 
-    private static Answer toEntity(AnswerDto answerDto) {
+    static Answer toEntity(AnswerDto answerDto) {
         return Answer.builder()
                 .text(answerDto.getText())
                 .build();
