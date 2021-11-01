@@ -24,8 +24,4 @@ public class Question {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "question_id")
     private List<Answer> answers = new ArrayList<>();
-
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "correct_answer_id")
-    private Answer correctAnswer;
 }

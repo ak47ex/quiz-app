@@ -33,7 +33,7 @@ public class QuizService {
     private static QuizDto toDto(Quiz quiz) {
         return QuizDto.builder()
                 .id(quiz.getId())
-                .text(quiz.getText())
+//                .text(quiz.getText())
                 .questions(
                         quiz.getQuestions()
                                 .stream()
@@ -53,7 +53,7 @@ public class QuizService {
                                 .map(AnswerService::toDto)
                                 .collect(toList())
                 )
-                .correctAnswer(AnswerService.toDto(question.getCorrectAnswer()))
+//                .correctAnswer(AnswerService.toDto(question.getCorrectAnswer()))
                 .build();
     }
 }

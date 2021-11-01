@@ -3,6 +3,7 @@ package ru.pyatkinmv.service;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 import ru.pyatkinmv.QuizApplication;
 import ru.pyatkinmv.model.AnswerDto;
 
@@ -16,6 +17,7 @@ class AnswerServiceTest {
     private AnswerService answerService;
 
     @Test
+    @Transactional
     void createGetAndDeleteTest() {
         AnswerDto answerDto = AnswerDto.builder()
                 .text("text")

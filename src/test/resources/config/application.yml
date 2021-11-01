@@ -4,3 +4,8 @@ spring:
   datasource:
     url: jdbc:tc:postgresql:13-alpine:///quiz-app-test-db
     datasource-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+#  jpa:
+#    show-sql: true
+#    properties:
+#      hibernate:
+#        format_sql: true

@@ -18,12 +18,8 @@ public class Quiz {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String text;
     private String shortcut;
-
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "secret_id")
-    private Secret secret;
+    private String secret;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "quiz_id")
