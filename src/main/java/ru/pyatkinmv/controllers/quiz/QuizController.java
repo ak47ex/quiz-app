@@ -1,18 +1,15 @@
-package ru.pyatkinmv.controllers;
+package ru.pyatkinmv.controllers.quiz;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.pyatkinmv.model.QuizDto;
 import ru.pyatkinmv.service.QuizService;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping("/answer")
+@RequestMapping("/quiz")
 @RequiredArgsConstructor
 public class QuizController {
     private final QuizService quizService;
@@ -29,5 +26,11 @@ public class QuizController {
         return quizService.getByCreatorId(creatorId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping(value = "/create", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<QuizDto> create(@RequestBody CreateQuizDto request) {
+        QuizDto dto = quizService.create(request.getSecret(), request.getQuestionsIds());
+        return ResponseEntity.ok(dto);
     }
 }

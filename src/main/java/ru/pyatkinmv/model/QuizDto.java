@@ -14,6 +14,7 @@ import java.util.List;
 @Builder
 public class QuizDto {
     private Integer id;
-    private String text;
+    private String shortcut;
+    private String secret;
     private List<QuestionDto> questions;
 }

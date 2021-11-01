@@ -67,7 +67,7 @@ public class QuestionService {
         return toDto(questionAnswer);
     }
 
-    private static QuestionDto toDto(QuestionAnswer qa) {
+    public static QuestionDto toDto(QuestionAnswer qa) {
         return QuestionDto.builder()
                 .id(qa.getId().getQuestion().getId())
                 .text(qa.getId().getQuestion().getText())
