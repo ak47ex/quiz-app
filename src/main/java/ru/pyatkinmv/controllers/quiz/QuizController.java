@@ -38,4 +38,12 @@ public class QuizController {
             return ResponseEntity.internalServerError().build();
         }
     }
+
+
+    @GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<QuizDto> getById(@PathVariable Integer id) {
+        return quizService.getById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 }

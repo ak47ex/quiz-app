@@ -37,6 +37,11 @@ public class QuizService {
     }
 
     @Transactional
+    public Optional<QuizDto> getById(Integer id) {
+        return quizRepository.findById(id).map(this::toDto);
+    }
+
+    @Transactional
     public QuizDto create(String secret, List<Integer> questionsIds) {
         List<QuestionAnswer> qaList = questionAnswerRepository.findAllByQuestionIds(questionsIds);
         if (qaList.isEmpty()) {
@@ -67,13 +72,10 @@ public class QuizService {
                 .id(quiz.getId())
                 .shortcut(quiz.getShortcut())
                 .secret(quiz.getSecret())
-                .questions(
+                .questions_ids(
                         quiz.getQuestions()
                                 .stream()
-                                .map((q) -> {
-                                    QuestionAnswer qa = questionAnswerRepository.findByQuestionId(q.getId()).get();
-                                    return toDto(q, qa);
-                                })
+                                .map(Question::getId)
                                 .collect(toList())
                 )
                 .build();

@@ -16,5 +16,5 @@ public class QuizDto {
     private Integer id;
     private String shortcut;
     private String secret;
-    private List<QuestionDto> questions;
+    private List<Integer> questions_ids;
 }
