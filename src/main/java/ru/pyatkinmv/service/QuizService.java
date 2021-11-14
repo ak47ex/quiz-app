@@ -4,18 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.pyatkinmv.dao.QuestionAnswerRepository;
-import ru.pyatkinmv.dao.QuestionRepository;
 import ru.pyatkinmv.dao.QuizRepository;
 import ru.pyatkinmv.dao.ShortcutRepository;
-import ru.pyatkinmv.dao.entities.Question;
-import ru.pyatkinmv.dao.entities.QuestionAnswer;
-import ru.pyatkinmv.dao.entities.Quiz;
-import ru.pyatkinmv.dao.entities.Shortcut;
+import ru.pyatkinmv.dao.entities.*;
 import ru.pyatkinmv.model.QuestionDto;
 import ru.pyatkinmv.model.QuizDto;
 
-import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -75,27 +71,26 @@ public class QuizService {
                         quiz.getQuestions()
                                 .stream()
                                 .map((q) -> {
-                                    QuestionDto qDto = toDto(q);
                                     QuestionAnswer qa = questionAnswerRepository.findByQuestionId(q.getId()).get();
-                                    qDto.setCorrectAnswer(AnswerService.toDto(qa.getId().getAnswer()));
-                                    return qDto;
+                                    return toDto(q, qa);
                                 })
                                 .collect(toList())
                 )
                 .build();
     }
 
-    private QuestionDto toDto(Question question) {
+    private QuestionDto toDto(Question question, QuestionAnswer questionAnswer) {
         return QuestionDto.builder()
                 .id(question.getId())
                 .text(question.getText())
-                .answers(
+                .other_answers(
                         question.getAnswers()
                                 .stream()
-                                .map(AnswerService::toDto)
+                                .filter((answer) -> !Objects.equals(answer.getId(), questionAnswer.getId().getAnswer().getId()))
+                                .map(Answer::getText)
                                 .collect(toList())
                 )
-//                .correctAnswer(AnswerService.toDto(question.getCorrectAnswer()))
+                .correct_answer(questionAnswer.getId().getAnswer().getText())
                 .build();
     }
 }

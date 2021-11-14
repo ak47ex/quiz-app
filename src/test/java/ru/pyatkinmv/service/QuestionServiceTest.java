@@ -5,10 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import ru.pyatkinmv.QuizApplication;
-import ru.pyatkinmv.model.AnswerDto;
 import ru.pyatkinmv.model.QuestionDto;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,7 +30,7 @@ class QuestionServiceTest {
         assertEquals(savedQuestion, getQuestionResult.get());
 
         assertEquals(getQuestionResult.get().getText(), text);
-        assertEquals(getQuestionResult.get().getCorrectAnswer().getText(), correctAnswer);
+        assertEquals(getQuestionResult.get().getCorrect_answer(), correctAnswer);
 
         boolean deleted = questionService.deleteById(savedQuestion.getId());
         assertTrue(deleted);

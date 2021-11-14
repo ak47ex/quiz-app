@@ -12,10 +12,7 @@ import ru.pyatkinmv.dao.entities.QuestionAnswer;
 import ru.pyatkinmv.model.AnswerDto;
 import ru.pyatkinmv.model.QuestionDto;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -71,8 +68,16 @@ public class QuestionService {
         return QuestionDto.builder()
                 .id(qa.getId().getQuestion().getId())
                 .text(qa.getId().getQuestion().getText())
-                .answers(qa.getId().getQuestion().getAnswers().stream().map(QuestionService::toDto).collect(Collectors.toList()))
-                .correctAnswer(toDto(qa.getId().getAnswer()))
+                .other_answers(
+                        qa.getId()
+                                .getQuestion()
+                                .getAnswers()
+                                .stream()
+                                .filter((answer) -> !Objects.equals(answer.getId(), qa.getId().getAnswer().getId()))
+                                .map((Answer::getText))
+                                .collect(Collectors.toList())
+                )
+                .correct_answer(qa.getId().getAnswer().getText())
                 .build();
     }
 

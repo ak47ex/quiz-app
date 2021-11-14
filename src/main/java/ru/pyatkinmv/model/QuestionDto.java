@@ -14,6 +14,6 @@ import java.util.List;
 public class QuestionDto {
     private Integer id;
     private String text;
-    private List<AnswerDto> answers;
-    private AnswerDto correctAnswer;
+    private List<String> other_answers;
+    private String correct_answer;
 }
