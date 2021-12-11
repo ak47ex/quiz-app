@@ -27,7 +27,5 @@ public class Quiz {
     @JoinColumn(name = "quiz_id")
     private List<Question> questions;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "creator_id")
-    private Creator creator;
+    private Integer creator;
 }

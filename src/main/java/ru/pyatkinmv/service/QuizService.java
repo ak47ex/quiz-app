@@ -10,6 +10,7 @@ import ru.pyatkinmv.dao.entities.*;
 import ru.pyatkinmv.model.QuestionDto;
 import ru.pyatkinmv.model.QuizDto;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -31,9 +32,13 @@ public class QuizService {
     }
 
     @Transactional
-    public Optional<QuizDto> getByCreatorId(Integer creatorId) {
-        return quizRepository.findByCreatorId(creatorId)
-                .map(this::toDto);
+    public List<QuizDto> getByCreatorId(Integer creatorId) {
+        List<Quiz> found = quizRepository.findByCreator(creatorId);
+        ArrayList<QuizDto> out = new ArrayList<QuizDto>(found.size());
+        for (Quiz quiz : found) {
+            out.add(toDto(quiz));
+        }
+        return out;
     }
 
     @Transactional
@@ -42,7 +47,7 @@ public class QuizService {
     }
 
     @Transactional
-    public QuizDto create(String secret, List<Integer> questionsIds) {
+    public QuizDto create(User user, String secret, List<Integer> questionsIds) {
         List<QuestionAnswer> qaList = questionAnswerRepository.findAllByQuestionIds(questionsIds);
         if (qaList.isEmpty()) {
             throw new IllegalArgumentException("Not found questions!");
@@ -58,11 +63,16 @@ public class QuizService {
                 shortcut = shortcutRepository.save(new Shortcut());
             } catch (Exception e) {
                 if (tryCount > 5) throw e;
-                System.out.println("Error on saving shortcut. Making another attempt");
+                System.err.println("Error on saving shortcut. Making another attempt");
             }
         }
         //FIXME: make shortcut generator inside quiz
-        Quiz quiz = Quiz.builder().questions(questions).secret(secret).shortcut(shortcut.getShortcut()).build();
+        Quiz quiz = Quiz.builder()
+                .questions(questions)
+                .secret(secret)
+                .shortcut(shortcut.getShortcut())
+                .creator(user.getId())
+                .build();
         //FIXME: make correct questions mapping
         return toDto(quizRepository.save(quiz));
     }
